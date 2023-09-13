@@ -21,7 +21,9 @@ func GetUser() ([]models.MasterUser, error) {
 	db := database.GetDB()
 
 	var users []models.MasterUser
-	result := db.Find(&users)
+	result := db.
+	Preload("MasterDepartment").
+	Find(&users)
 	if result.Error != nil {
 		fmt.Printf("error fetching user: %v", result.Error)
 	}

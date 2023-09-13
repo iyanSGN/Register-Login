@@ -1,17 +1,19 @@
 package models
 
 type MasterUser struct {
-	Id      		int32 			`gorm:"primarykey" json:"id"`
-	DepartmentId	*int32			`json:"department_id"`
-	Name			string			`gorm:"type:varchar(255)" json:"name"`
-	Email			string			`gorm:"type:varchar(255)" json:"email"`
-	Password		string			`gorm:"type:varchar(255)" json:"password"`
+	Id      			uint 				`gorm:"primarykey" json:"id"`
+	DepartmentId		uint				`json:"department_id"`
+	Name				string				`gorm:"type:varchar(255)" json:"name"`
+	Email				string				`gorm:"type:varchar(255)" json:"email"`
+	Password			string				`gorm:"type:varchar(255)" json:"password"`
+	MasterDepartment	MasterDepartment	`gorm:"foreignKey:DepartmentId"`
 }
 
 type MasterDepartment struct {
-	Id 				int32			`gorm:"primarykey" json:"id"`
-	ParentId		int32			`json:"parid"`
+	Id 				uint			`gorm:"primarykey" json:"id"`
+	ParentId		uint			`json:"parid"`
 	Name			string			`gorm:"type:varchar(255)" json:"name"`
+	Users			[]MasterUser	`gorm:"foreignKey:DepartmentId"`
 }
 
 func (MasterUser) TableName() string {
