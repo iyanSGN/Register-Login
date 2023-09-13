@@ -55,5 +55,6 @@ func InitDB() {
 func Migrate() {
 	db.AutoMigrate(
 		&models.MasterUser{},
+		&models.MasterDepartment{},
 	)
 }

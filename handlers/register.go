@@ -42,6 +42,7 @@ func CreateUser(c echo.Context) error {
 		"id":	createdUser.Id,
 		"name":	createdUser.Name,
 		"email": createdUser.Email,
+		"department_id" : createdUser.DepartmentId,
 		"password": createdUser.Password,
 		},
 	}
@@ -111,6 +112,27 @@ func DeleteUser(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message" : "User id has been deleted",
+		"status_code" : http.StatusOK,
+	})
+}
+
+func GetUserByDepId(c echo.Context) error {
+	department := c.Param("department_id")
+	department_id, err := strconv.Atoi(department)
+
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	} 
+
+	existDepartment, err := app.GetUserByDepId(department_id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"data" : existDepartment,
 		"status_code" : http.StatusOK,
 	})
 }

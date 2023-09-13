@@ -60,7 +60,7 @@ func UpdateUser(id int, userId models.MasterUser) error {
 	return nil
 }
 
-func DeleteUser (id int) error {
+func DeleteUser(id int) error {
 	db := database.GetDB()
 
 	var user models.MasterUser
@@ -69,5 +69,25 @@ func DeleteUser (id int) error {
 		return fmt.Errorf("error : %w", result.Error)
 	}
 	return nil
+}
+
+func GetUserByDepId(department_id int) ([]models.MasterUser, error) {
+	db := database.GetDB()
+
+	var department []models.MasterUser
+	result := db.
+		Where("department_id = ?",department_id).
+		Find(&department)
+	if result.Error != nil {
+		return nil, fmt.Errorf("error retrieving role: %w", result.Error)
+	}
+
+	getDepartment := make([]models.MasterUser, len(department))
+	for i, department := range department {
+		getDepartment[i] = models.MasterUser(department)
+	}
+
+	return getDepartment, nil
+
 }
 

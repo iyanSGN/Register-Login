@@ -21,6 +21,8 @@ func Init() *echo.Echo {
 	authGroup.PUT("/register/:id", handlers.UpdateUser)
 	authGroup.DELETE("/register/:id", handlers.DeleteUser)
 
+
+	e.GET("/login/:department_id", handlers.GetUserByDepId)
 	e.POST("/login", handlers.LoginAccount)
 
 	return e
