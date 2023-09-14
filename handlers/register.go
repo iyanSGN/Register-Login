@@ -62,6 +62,24 @@ func GetUser(c echo.Context) error {
 		"status_code" : http.StatusOK,
 	})
 
+}
+
+func GetId(c echo.Context) error {
+	userId := c.Param("id")
+	id, err := strconv.Atoi(userId)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	existedUser, err := app.GetId(id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"data" : existedUser,
+		"status_code" : http.StatusOK,
+	})
 
 }
 

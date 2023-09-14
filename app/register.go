@@ -31,6 +31,25 @@ func GetUser() ([]models.MasterUser, error) {
 	return users, nil
 }
 
+func GetId(id int) ([]models.MasterUser, error)  {
+	db := database.GetDB()
+
+	var user []models.MasterUser
+	result := db.
+		Preload("MasterDepartment").
+		First(&user, id)
+	if result.Error != nil {
+		return nil, fmt.Errorf("error retrieving user: %w", result.Error) 
+	}
+
+	getUser := make([]models.MasterUser, len(user))
+	for i, user := range user {
+		getUser[i] = models.MasterUser(user)
+	}
+
+	return getUser, nil
+
+}
 
 func UpdateUser(id int, userId models.MasterUser) error {
 	db := database.GetDB()

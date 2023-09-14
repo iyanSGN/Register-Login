@@ -11,9 +11,8 @@ type MasterUser struct {
 
 type MasterDepartment struct {
 	Id 				uint			`gorm:"primarykey" json:"id"`
-	ParentId		uint			`json:"parid"`
+	ParentId		uint			`json:"parent_id"`
 	Name			string			`gorm:"type:varchar(255)" json:"name"`
-	Users			[]MasterUser	`gorm:"foreignKey:DepartmentId"`
 }
 
 func (MasterUser) TableName() string {

@@ -7,8 +7,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-func Init() *echo.Echo {
-	e := echo.New()
+func Init(e *echo.Echo) {
 	authGroup := e.Group("")
 	authGroup.Use(handlers.TokenMiddleware)
 
@@ -18,12 +17,11 @@ func Init() *echo.Echo {
 
 	e.POST("/register", handlers.CreateUser)
 	e.GET("/register", handlers.GetUser)
+	e.GET("/register/:id", handlers.GetId)
 	authGroup.PUT("/register/:id", handlers.UpdateUser)
 	authGroup.DELETE("/register/:id", handlers.DeleteUser)
 
 
 	e.GET("/login/:department_id", handlers.GetUserByDepId)
 	e.POST("/login", handlers.LoginAccount)
-
-	return e
 }
