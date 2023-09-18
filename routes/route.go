@@ -22,6 +22,6 @@ func Init(e *echo.Echo) {
 	authGroup.DELETE("/register/:id", handlers.DeleteUser)
 
 
-	e.GET("/login/:department_id", handlers.GetUserByDepId)
+	e.GET("/department_id/:department_id", handlers.GetUserByDepId)
 	e.POST("/login", handlers.LoginAccount)
 }

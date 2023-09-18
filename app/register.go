@@ -9,13 +9,14 @@ import (
 func CreateUser(user models.MasterUser) (models.MasterUser, error) {
 	db := database.GetDB()
 
-	result := db.Create(&user)
-	if result.Error != nil {
-		fmt.Printf("Error create user: %v", result.Error)
+	err := db.Create(&user).Error
+	if err != nil {
+		fmt.Printf("Error create user: %v", err.Error())
 	}
 
 	return user, nil
 }
+
 
 func GetUser() ([]models.MasterUser, error) {
 	db := database.GetDB()
@@ -25,7 +26,7 @@ func GetUser() ([]models.MasterUser, error) {
 	Preload("MasterDepartment").
 	Find(&users)
 	if result.Error != nil {
-		fmt.Printf("error fetching user: %v", result.Error)
+		fmt.Println("error fetching user: %w", result.Error)
 	}
 
 	return users, nil
@@ -97,6 +98,7 @@ func GetUserByDepId(department_id int) ([]models.MasterUser, error) {
 
 	var department []models.MasterUser
 	result := db.
+		Preload("MasterDepartment").
 		Where("department_id = ?",department_id).
 		Find(&department)
 	if result.Error != nil {

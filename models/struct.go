@@ -4,9 +4,9 @@ type MasterUser struct {
 	Id      			uint 				`gorm:"primarykey" json:"id"`
 	DepartmentId		uint				`json:"department_id"`
 	Name				string				`gorm:"type:varchar(255)" json:"name"`
-	Email				string				`gorm:"type:varchar(255)" json:"email"`
+	Email				string				`gorm:"unique;type:varchar(255)" json:"email"`
 	Password			string				`gorm:"type:varchar(255)" json:"password"`
-	MasterDepartment	MasterDepartment	`gorm:"foreignKey:DepartmentId"`
+	MasterDepartment	MasterDepartment	`gorm:"foreignKey:DepartmentId; constraint:OnDelete:CASCADE;"` 
 }
 
 type MasterDepartment struct {
